@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `date_short` varchar(20) NOT NULL DEFAULT 'j/n/Y',
   `time_short` varchar(20) NOT NULL DEFAULT 'g:i:s A',
   `max_rank_achieved` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `template` enum('Default','Freon22') NOT NULL,
+  `template` enum('Default','Freon22') NOT NULL DEFAULT 'Default',
   `colour_scheme` varchar(30) NOT NULL DEFAULT 'Default',
   `message_notifications` varchar(100) NOT NULL,
   `hotkeys` text NOT NULL,
