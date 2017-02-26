@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `fontsize` tinyint(3) unsigned NOT NULL DEFAULT '100',
   `password_reset` char(32) NOT NULL,
   `use_ajax` enum('TRUE','FALSE') NOT NULL DEFAULT 'TRUE',
-  `mail_banned` int(10) unsigned NOT NULL,
+  `mail_banned` int(10) unsigned NOT NULL DEFAULT '0',
   `referral_id` int(10) unsigned NOT NULL,
   `hof_name` varchar(32) NOT NULL,
   `irc_nick` varchar(32) DEFAULT NULL,
