@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `max_rank_achieved` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `template` enum('Default','Freon22') NOT NULL DEFAULT 'Default',
   `colour_scheme` varchar(30) NOT NULL DEFAULT 'Default',
-  `message_notifications` varchar(100) NOT NULL,
+  `message_notifications` varchar(100) DEFAULT NULL,
   `hotkeys` text NOT NULL,
   PRIMARY KEY (`account_id`),
   FULLTEXT KEY `login` (`login`)
