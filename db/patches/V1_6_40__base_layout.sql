@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `template` enum('Default','Freon22') NOT NULL DEFAULT 'Default',
   `colour_scheme` varchar(30) NOT NULL DEFAULT 'Default',
   `message_notifications` varchar(100) DEFAULT NULL,
-  `hotkeys` text NOT NULL,
+  `hotkeys` text DEFAULT NULL,
   PRIMARY KEY (`account_id`),
   FULLTEXT KEY `login` (`login`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
