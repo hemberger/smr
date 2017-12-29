@@ -96,9 +96,6 @@ release_lock();
 // We need a lock on the new sector so that more than one person isn't hitting the same mines
 acquire_lock($player->getSectorID());
 
-// delete plotted course
-$player->deletePlottedCourse();
-
 // get new sector object
 $sector =& $player->getSector();
 
