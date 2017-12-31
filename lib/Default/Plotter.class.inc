@@ -265,20 +265,18 @@ class Distance {
 	public function isInPath($sectorID) {
 		return in_array($sectorID,$this->getPath());
 	}
+
+	/**
+	 * If the given sector is in the path, then return the segment
+	 * of the path that comes after the given sector.
+	 */
+	public function skipToSector($sectorID) {
+		$position = array_search($sectorID, $this->path);
+		if ($position !== false) {
+			// The resulting path does not include sectorID, i.e. (sectorID,end]
+			$this->setPath(array_slice($this->path, $position + 1));
+		}
+	}
 }
-//$d = new Distance(1);
-//$d->addToPath(3);
-//$d2 = clone($d);
-//$d2->addWarpToPath(6);
-//var_dump($d);
-//var_dump($d2);
 
-//$x = 1;
-
-//$x = Globals::getGood(1);
-//$x['TransactionType'] = 'Sell';
-
-//$x =& SmrSector::getSector(1,2);
-//var_dump($x);
-//var_dump(Plotter::findDistanceToX($x, SmrSector::getSector(1,1), 0, 2000, 500,true));
 ?>
