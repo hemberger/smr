@@ -35,12 +35,11 @@ services:
             - ./templates:/smr/templates
 
     flyway:
-        image: boxfuse/flyway:latest-alpine
+        build:
+            context: db
         command: -url=jdbc:mysql://${MYSQL_HOST}/smr_live -user=smr -password=${MYSQL_PASSWORD} migrate
         links:
             - mysql
-        volumes:
-            - ./db/patches:/flyway/sql:ro
 
     mysql:
         image: mysql:5.7
