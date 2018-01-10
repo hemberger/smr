@@ -174,6 +174,12 @@ try {
 			case 3:
 				echo ('<td align="center" style="color: #06F;">Newbie</td>');
 			break;
+			case 4:
+				echo ('<td align="center" style="color: yellow;">Port</td>');
+			break;
+			case 5:
+				echo ('<td align="center" style="color: yellow;">Planet</td>');
+			break;
 			default:
 				echo ('<td align="center">-</td>');
 		}
