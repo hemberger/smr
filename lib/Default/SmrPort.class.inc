@@ -1,6 +1,7 @@
 <?php
 
 require_once(LIB . 'Default/SmrTradeGood.class.inc');
+require_once(LIB . 'Default/SmrPortGood.class.inc');
 
 class SmrPort {
 	protected static $CACHE_PORTS = array();
@@ -190,7 +191,8 @@ class SmrPort {
 		$refreshPerSec = $refreshPerHour / 3600;
 		$amountToAdd = floor($secondsSinceRefresh * $refreshPerSec);
 		
-		if ($good['Amount'] > $good['Max'] || ($good['Amount'] < $good['Max'] && $amountToAdd > 0)) {
+		// TODO: what is going on here?
+		if ($good['Amount'] + $amountToAdd > $good['Good']->maxAmount) {
 			$good['Amount'] = min($good['Max'], $good['Amount'] + $amountToAdd);
 			$db->query('UPDATE port_has_goods SET amount = ' . $db->escapeNumber($good['Amount']) . ' WHERE ' . $this->SQL . ' AND good_id = ' . $db->escapeNumber($good['ID']) . ' LIMIT 1');
 		}
@@ -199,7 +201,6 @@ class SmrPort {
 	
 	public function &getGoods() {
 		if(!$this->isCachedVersion() && empty($this->goods)) {
-			$GOODS = Globals::getGoods();
 			$secondsSinceRefresh = max(0, TIME - $this->lastUpdate);
 				
 			$this->db->query('SELECT * FROM port_has_goods WHERE ' . $this->SQL . ' ORDER BY good_id ASC');
@@ -209,21 +210,23 @@ class SmrPort {
 			$this->goods['Buy'] = array();
 			$this->goods['All Goods'] = array();
 			while ($this->db->nextRecord()) {
-				$good = $GOODS[$this->db->getInt('good_id')];
-				$good['Amount'] = $this->db->getInt('amount');
-				$good['TransactionType'] = $this->db->getField('transaction_type');
+				$goodID = $this->db->getInt('good_id');
+				$good = array(
+					'Good' => SmrTradeGood::getGood($goodID),
+					'Amount' => $this->db->getInt('amount'),
+					'TransactionType' => $this->db->getField('transaction_type'),
+				);
 				$timeRefreshed = min($timeRefreshed, $this->restockGood($good, $secondsSinceRefresh));
 				
-				$g = $good;
-				$this->goods['All Goods'][$g['ID']] =& $g;
-				$this->goods[$g['TransactionType']][$g['ID']] =& $g;
-				unset($g); //HACK Don't want to keep g around - it kills goods due to references.
+				$this->goods['All Goods'][$goodID] = $good;
+				$this->goods[$good['TransactionType']][$goodID] = $good;
 			}
 			$this->lastUpdate += $timeRefreshed;
 			$this->db->query('UPDATE port SET last_update = ' . $this->db->escapeNumber($this->lastUpdate) . ' WHERE ' . $this->SQL . ' LIMIT 1');
 		}
 		return $this->goods;
 	}
+
 	public function &getVisibleGoods(AbstractSmrPlayer &$player=null) {
 		$goods = $this->getGoods();
 		$visibleGoods = array(
@@ -314,13 +317,14 @@ class SmrPort {
 		if($this->isCachedVersion())
 			throw new Exception('Cannot update a cached port!');
 		$this->getGoods();
-		if($amount < 0)
-			$amount = 0;
-		$max = $this->goods['All Goods'][$goodID]['Max'];
-		if($amount > $max)
-			$amount = $max;
+		// amount must be between [0, max] inclusive
+		$amount = max(0, min($amount, SmrTradeGood::getGood($goodID)->maxAmount));
+
+		// Don't need to do any setting if the amount hasn't changed
 		if($this->goods['All Goods'][$goodID]['Amount'] == $amount)
 			return;
+
+		// Set amount in arrays and update the db
 		$this->goods['All Goods'][$goodID]['Amount'] = $amount;
 		if(isset($this->goods['Sell'][$goodID]))
 			$this->goods['Sell'][$goodID]['Amount'] = $amount;
@@ -330,15 +334,15 @@ class SmrPort {
 	}
 	
 	public function getGoodAmount($goodID) {
-		$good =& $this->getGood($goodID);
-		return $good['Amount'];
+		return $this->getGood($goodID)['Amount'];
 	}
 	
-	public function decreaseGood(array &$good,$amount,$doRefresh) {
-		$this->setGoodAmount($good['ID'],$this->getGoodAmount($good['ID']) - $amount);
+	protected function decreaseGood($goodID,$amount,$doRefresh) {
+		$goodID = $good['Good']->goodID;
+		$this->setGoodAmount($goodID, $this->getGoodAmount($goodID) - $amount);
 		if($doRefresh===true) {
-			//get id of goods to replenish
-			$this->refreshGoods($good['Class'],$amount);
+			$classTraded = SmrTradeGood::getGood($goodID)->class;
+			$this->refreshGoods($classTraded, $amount);
 		}
 	}
 	
@@ -350,34 +354,38 @@ class SmrPort {
 		$this->setGoodAmount($goodID,$this->getGoodAmount($goodID) - $amount);
 	}
 	
+	/**
+	 * When a good is traded, it increases the supply/demand of all the
+	 * goods at the class above it.
+	 */
 	protected function refreshGoods($classTraded,$amountTraded) {
 		$refreshAmount = round($amountTraded * self::REFRESH_PER_GOOD);
 		//refresh goods that need it
 		$portGoods =& $this->getGoodsAll();
 		$refreshClass = $classTraded+1;
 		foreach ($portGoods as &$good) {
-			if($good['Class']==$refreshClass) {
-				$this->increaseGoodAmount($good['ID'], $refreshAmount);
+			if ($good['Good']->class == $refreshClass) {
+				$this->increaseGoodAmount($good['Good']->goodID, $refreshAmount);
 			}
 		}
 	}
 
-	protected function tradeGoods(array &$good, $goodsTraded, $exp) {
+	protected function tradeGoods($goodID, $goodsTraded, $exp) {
 		$goodsTradedMoney = $goodsTraded * self::GOODS_TRADED_MONEY_MULTIPLIER;
 		$this->increaseUpgrade($goodsTradedMoney);
 		$this->increaseCredits($goodsTradedMoney);
 		$this->increaseExperience($exp);
-		$this->decreaseGood($good,$goodsTraded,true);
+		$this->decreaseGood($goodID,$goodsTraded,true);
 	}
 	
-	public function buyGoods(array &$good, $goodsTraded, $idealPrice, $bargainPrice, $exp) {
-		$this->tradeGoods($good, $goodsTraded, $exp);
+	public function buyGoods($goodID, $goodsTraded, $idealPrice, $bargainPrice, $exp) {
+		$this->tradeGoods($goodID, $goodsTraded, $exp);
 		$this->increaseUpgrade(min(max($idealPrice, $goodsTraded * 1000), $bargainPrice));
 		$this->increaseCredits($bargainPrice);
 	}
 	
-	public function sellGoods(array &$good, $goodsTraded, $idealPrice, $bargainPrice, $exp) {
-		$this->tradeGoods($good, $goodsTraded, $exp);
+	public function sellGoods($goodID, $goodsTraded, $idealPrice, $bargainPrice, $exp) {
+		$this->tradeGoods($goodID, $goodsTraded, $exp);
 	}
 	
 	public function checkForUpgrade() {
@@ -463,11 +471,10 @@ class SmrPort {
 			throw new Exception('Cannot update a cached port!');
 		if(!is_numeric($goodID))
 			return false;
-		$newGood = Globals::getGood($goodID);
-		$newGood['Amount'] = $newGood['Max'];
-		$newGood['TransactionType'] = $type;
-		$this->goods['All Goods'][$goodID] =& $newGood;
-		$this->goods[$type][$goodID] =& $newGood;
+		$good = SmrTradeGood::getGood($goodID);
+		$newGood = array('Good' => $good, 'Amount' => $good->maxAmount, 'TransactionType' => $type);
+		$this->goods['All Goods'][$goodID] = $newGood;
+		$this->goods[$type][$goodID] = $newGood;
 		$this->db->query('REPLACE INTO port_has_goods (game_id, sector_id, good_id, transaction_type, amount) VALUES (' . $this->db->escapeNumber($this->getGameID()) . ',' . $this->db->escapeNumber($this->getSectorID()) . ',' . $this->db->escapeNumber($goodID) . ',' . $this->db->escapeString($type) . ',' . $this->db->escapeNumber($newGood['Amount']) . ')');
 		$this->db->query('DELETE FROM route_cache WHERE game_id='.$this->db->escapeNumber($this->getGameID()));
 	}
