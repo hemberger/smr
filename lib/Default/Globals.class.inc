@@ -177,32 +177,6 @@ class Globals {
 		return $raceName;
 	}
 
-	public static function &getGoods() {
-		if(self::$GOODS==null) {
-			self::initialiseDatabase();
-			self::$GOODS = array();
-
-			// determine user level
-			self::$db->query('SELECT * FROM good ORDER BY good_id');
-			while(self::$db->nextRecord()) {
-				self::$GOODS[self::$db->getField('good_id')] = array(
-																'Type' => 'Good',
-																'ID' => self::$db->getInt('good_id'),
-																'Name' => self::$db->getField('good_name'),
-																'Max' => self::$db->getInt('max_amount'),
-																'BasePrice' => self::$db->getInt('base_price'),
-																'Class' => self::$db->getInt('good_class'),
-																'ImageLink' => 'images/port/' . self::$db->getField('good_id') . '.png',
-																'AlignRestriction' => self::$db->getInt('align_restriction')
-															);
-			}
-		}
-		return self::$GOODS;
-	}
-	public static function &getGood($goodID) {
-		$goods =& self::getGoods();
-		return $goods[$goodID];
-	}
 	public static function getGoodName($goodID) {
 		if($goodID==GOOD_NOTHING) {
 			return 'Nothing';

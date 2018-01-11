@@ -1,4 +1,7 @@
 <?php
+
+require_once(LIB . 'Default/SmrTradeGood.class.inc');
+
 class SmrPort {
 	protected static $CACHE_PORTS = array();
 	protected static $CACHE_CACHED_PORTS = array();
@@ -199,7 +202,7 @@ class SmrPort {
 			$GOODS = Globals::getGoods();
 			$secondsSinceRefresh = max(0, TIME - $this->lastUpdate);
 				
-			$this->db->query('SELECT * FROM port_has_goods WHERE ' . $this->SQL . ' ORDER BY good_id ASC LIMIT ' . count($GOODS));
+			$this->db->query('SELECT * FROM port_has_goods WHERE ' . $this->SQL . ' ORDER BY good_id ASC');
 			
 			$timeRefreshed = $secondsSinceRefresh;
 			$this->goods['Sell'] = array();
@@ -405,23 +408,22 @@ class SmrPort {
 	}
 	
 	protected function selectAndAddGood($goodClass) {
-		$GOODS = Globals::getGoods();
+		$GOODS = SmrTradeGood::getGoods();
 		shuffle($GOODS);
-		do {
-			if(count($GOODS) == 0) return false;
-			$newGood = array_shift($GOODS);
-		} while( $this->hasGood($newGood['ID']) || $newGood['Class'] != $goodClass );
-		
-		$transactionType = mt_rand(1,2) == 1 ? 'Buy' : 'Sell';
-		$this->addPortGood($newGood['ID'],$transactionType);
-		return $newGood;
+		foreach ($GOODS as $newGoodID => $newGood) {
+			if (!$this->hasGood($newGoodID) && $newGood->class == $goodClass) {
+				$transactionType = mt_rand(1,2) == 1 ? 'Buy' : 'Sell';
+				$this->addPortGood($newGoodID, $transactionType);
+				return;
+			}
+		}
 	}
 	
 	protected function doUpgrade() {
 		switch($this->getLevel()) {
 			case 0:
 				for($i=0;$i<3;++$i) { // Add 3 goods for upgrading to level 1
-					if( $this->selectAndAddGood(1) === false ) break;
+					$this->selectAndAddGood(1);
 				}
 			break;
 			
@@ -441,12 +443,8 @@ class SmrPort {
 				$this->selectAndAddGood(3);
 			break;
 
-			case 8: // Add 1 level 3, and 50% chance of level 4
+			case 8:
 				$this->selectAndAddGood(3);
-		
-				if (mt_rand(1,100) <= 50) { //50% chance to get tier 4 when upgrading to level 9
-					$this->selectAndAddGood(4);
-				}
 			break;
 			
 			default: // We don't want to add goods.
