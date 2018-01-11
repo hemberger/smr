@@ -91,6 +91,7 @@ services:
             MYSQL_DATABASE:      smr_live
         volumes:
             - smr_mysql_data:/var/lib/mysql
+            - ./low_mem.cnf:/etc/mysql/conf.d/low_mem.cnf
         labels:
             - "traefik.enable=false"
         # The mysql:5.7+ docker default sql mode uses STRICT_TRANS_TABLES,
