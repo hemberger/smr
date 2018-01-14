@@ -40,6 +40,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY composer.json .
 RUN composer install --no-interaction
 
+# Xdebug
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+RUN mkdir /tmp/xdebug && chown www-data /tmp/xdebug
+
 # Set the baseline php.ini version based on the value of PHP_DEBUG
 ARG PHP_DEBUG=0
 RUN MODE=$([ "$PHP_DEBUG" = "0" ] && echo "production" || echo "development") && \
