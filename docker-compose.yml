@@ -34,9 +34,13 @@ x-smr-common: &smr-common
     depends_on:
         - mysql
         - smtp
+        - webgrind
     volumes:
         - ./vol_upload:/smr/htdocs/upload
         - ./config:/smr/config:ro
+        # Output and Config files for Xdebug
+        - ./xdebug:/tmp/xdebug
+        - ./config/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
 services:
     smr:
@@ -53,6 +57,9 @@ services:
             - ./htdocs:/smr/htdocs
             - ./lib:/smr/lib
             - ./templates:/smr/templates
+            # Output and Config files for Xdebug
+            - ./xdebug:/tmp/xdebug
+            - ./config/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
 
     smtp:
         image: hemberger/postfix-relay
@@ -203,3 +210,11 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - ./vol_portainer:/data
+
+    webgrind:
+        image: devgeniem/webgrind
+        ports:
+            - 8082:80
+        volumes:
+            - ./xdebug:/tmp/xdebug
+            - .:/smr:ro
