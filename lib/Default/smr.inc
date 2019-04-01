@@ -402,10 +402,8 @@ function getIpAddress() {
 function do_voodoo() {
 	global $lock, $var, $container, $player, $ship, $sector, $account, $db, $template;
 
-	if(!defined('AJAX_CONTAINER')) {
-		define('AJAX_CONTAINER', isset($var['AJAX']) && $var['AJAX'] === true);
-	}
 	if(!AJAX_CONTAINER && USING_AJAX && SmrSession::hasChangedSN()) {
+		error_log('SN has changed!');
 		exit;
 	}
 //	ob_clean();
@@ -513,7 +511,9 @@ function do_voodoo() {
 			WeightedRandom::saveWeightedRandoms();
 		}
 		//Update session here to make sure current page $var is up to date before releasing lock.
-		SmrSession::update();
+		if (!AJAX_CONTAINER) {
+			SmrSession::update();
+		}
 		release_lock();
 	}
 
@@ -548,7 +548,11 @@ function do_voodoo() {
 
 	$template->display($var['url'], USING_AJAX);
 
-	SmrSession::update();
+	if (!USING_AJAX && !AJAX_CONTAINER) {
+		// Ideally the template code would not add new links, but since
+		// it currently does, we need to update the session.
+		SmrSession::update();
+	}
 
 	exit;
 }

@@ -25,11 +25,13 @@ var exec = function(s) {
 	// pauseAJAX
 	window.onblur = function() {
 		// Pause the Ajax updates
+		console.log('pausing ajax');
 		ajaxRunning = false;
 	};
 
 	window.onunload = stopAJAX = function() {
 		// Stop the Ajax updates
+		console.log('stopping ajax');
 		clearTimeout(updateRefreshTimeout);
 		disableStartAJAX=true;
 		ajaxRunning = false;
@@ -98,10 +100,15 @@ var exec = function(s) {
 		var e = $(this);
 		data.toX = e.data('x');
 		data.toY = e.data('y');
-		$.get(submitMoveHREF, data, function(data, textStatus, jqXHR) {
-				highlightMoves();
+		console.log('moving...');
+		var result = $.get(submitMoveHREF, data, function(data, textStatus, jqXHR) {
+				console.log('highlighting moves');
 				updateRefresh(data, textStatus, jqXHR);
+				highlightMoves();
 			}, 'xml');
+		console.log('result = ', result);
+				updateRefresh(data);
+				highlightMoves();
 	};
 
 	window.highlightMoves = highlightMoves = function() {

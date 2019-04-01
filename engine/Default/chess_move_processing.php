@@ -1,7 +1,7 @@
 <?php
 
 $chessGame = ChessGame::getChessGame($var['ChessGameID']);
-$template->assign('ChessGame',$chessGame);
+//$template->assign('ChessGame',$chessGame);
 if(is_numeric($_REQUEST['x']) && is_numeric($_REQUEST['y']) && is_numeric($_REQUEST['toX']) && is_numeric($_REQUEST['toY'])) {
 	$x = $_REQUEST['x'];
 	$y = $_REQUEST['y'];
@@ -50,5 +50,14 @@ else {
 //	this.logger.error('Player supplied an invalid number: x = ' + xIn + ', y = ' + yIn + ', toX = ' + toXIn + ', toY = ' + toYIn);
 }
 
-$var = SmrSession::retrieveVar(SmrSession::$lastSN);
-do_voodoo();
+//$var = SmrSession::retrieveVar(SmrSession::$lastSN);
+//do_voodoo();
+//$template->display('chess_play.php');
+//$container = create_container('skeleton.php', 'chess_play.php');
+require('chess_play.php');
+$template->assign('ThisPlayer', $player);
+$template->assign('ThisAccount', $account);
+$template->display('chess_play.php');
+//transfer('ChessGameID');
+//forward($container);
+exit;

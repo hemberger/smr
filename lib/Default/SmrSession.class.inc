@@ -1,7 +1,17 @@
 <?php
 
-if(!defined('USING_AJAX'))
-	define('USING_AJAX',false);
+function usingAjax() {
+	if (!defined('USING_AJAX'))
+		define('USING_AJAX',false);
+	return USING_AJAX;
+}
+
+function ajaxContainer() {
+	if (!defined('AJAX_CONTAINER'))
+		define('AJAX_CONTAINER',false);
+	return AJAX_CONTAINER;
+}
+
 class SmrSession {
 	const ALWAYS_AVAILABLE = 999999;
 	const TIME_BEFORE_EXPIRY = 3600;
@@ -134,8 +144,8 @@ class SmrSession {
 	private static $var;
 	private static $commonIDs;
 	private static $generate;
-	private static $SN;
-	private static $lastSN;
+	public static $SN;
+	public static $lastSN;
 	public static $account_id;
 	public static $last_accessed;
 
@@ -226,9 +236,13 @@ class SmrSession {
 			self::$var			= array();
 			self::$commonIDs	= array();
 		}
+
 	}
 
 	public static function update() {
+		if (ajaxContainer() || usingAjax()) {
+			return;
+		}
 		foreach(self::$var as $key => &$value) {
 			if ($value['RemainingPageLoads'] <= 0) {
 				//This link was valid this load but will not be in the future, removing it now saves database space and data transfer.
@@ -237,6 +251,8 @@ class SmrSession {
 		} unset($value);
 		$compressed = gzcompress(serialize(self::$var));
 		if(!self::$generate) {
+			error_log("Setting lastSN to SN: sn=".self::$SN.", last_sn=".self::$lastSN);
+			error_log(print_r(debug_backtrace(), true));
 			self::$db->query('UPDATE active_session SET account_id=' . self::$db->escapeNumber(self::$account_id) . ',game_id=' . self::$db->escapeNumber(self::$game_id) . (!USING_AJAX ? ',last_accessed=' . self::$db->escapeNumber(TIME) : '') . ',session_var=' . self::$db->escapeBinary($compressed) .
 					',last_sn='.self::$db->escapeString(self::$SN).
 					' WHERE session_id=' . self::$db->escapeString(self::$session_id) . (USING_AJAX ? ' AND last_sn='.self::$db->escapeString(self::$lastSN) : '') . ' LIMIT 1');
@@ -283,8 +299,10 @@ class SmrSession {
 	}
 
 	private static function updateSN() {
-		if(!USING_AJAX)
-			self::$db->query('UPDATE active_session SET last_sn='.self::$db->escapeString(self::$SN).
+		if (ajaxContainer() || usingAjax()) {
+			return;
+		}
+		self::$db->query('UPDATE active_session SET last_sn='.self::$db->escapeString(self::$SN).
 				' WHERE session_id=' . self::$db->escapeString(self::$session_id) . ' LIMIT 1');
 	}
 
@@ -306,6 +324,10 @@ class SmrSession {
 		if (empty(self::$var[$sn])) {
 			return false;
 		}
+	if(!defined('AJAX_CONTAINER')) {
+		define('AJAX_CONTAINER', isset(self::$var[$sn]['AJAX']) && self::$var[$sn]['AJAX'] === true);
+	}
+
 		self::$SN = $sn;
 		SmrSession::updateSN();
 		if(isset(self::$var[$sn]['body']) && isset(self::$var[$sn]['CommonID'])) {
@@ -424,7 +446,7 @@ class SmrSession {
 	}
 
 	public static function getNewHREF($container, $forceFullURL=false) {
-		$sn = self::addLink($container) . (isset($container['AJAX']) && $container['AJAX'] == true ? '&amp;ajax=1':'');
+		$sn = self::addLink($container);
 		if($forceFullURL===true||stripos($_SERVER['REQUEST_URI'],'loader.php')===false)
 			return '/loader.php?sn=' . $sn;
 		else
