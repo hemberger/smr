@@ -14,6 +14,10 @@ class SmrBBCode {
 	static function parse($bbParser, $action, $tagName, $default, $tagParams, $tagContent) {
 	global $overrideGameID, $disableBBLinks, $player, $account, $var;
 		try {
+			self::$tagName($default, $tagParams);
+		} catch (InvalidSmrBBCode) {
+			if ($action === \Nbbc\BBCode::BBCODE_CHECK) {
+				return false
 			switch ($tagName) {
 				case 'combatlog':
 				if ($action == \Nbbc\BBCode::BBCODE_CHECK) {
