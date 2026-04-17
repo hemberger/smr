@@ -145,7 +145,7 @@ class AllianceBank extends PlayerPage {
 		$template->assign('BankTransactions', $bankTransactions);
 
 		// only if we have at least one result
-		if (count($bankTransactions) > 0) {
+		if ($bankTransactions !== []) {
 			$template->assign('MinValue', $minValue);
 			$template->assign('MaxValue', $maxValue);
 			$container = new self($allianceID);

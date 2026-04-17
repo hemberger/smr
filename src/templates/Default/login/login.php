@@ -89,7 +89,7 @@ use Smr\SocialLogin\Twitter;
 	</tr>
 </table><?php
 
-if (count($GameNews) > 0) { ?>
+if ($GameNews !== []) { ?>
 	<table class="standard center" style="width:730px;">
 		<tr>
 			<th class="shrink">Time</th>

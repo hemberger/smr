@@ -8,7 +8,7 @@
  * @var array<array{title: string, writer: string, link: string}> $Articles
  */
 
-if (count($Articles) === 0) { ?>
+if ($Articles === []) { ?>
 	<p>All articles have been assigned to a paper.</p><?php
 } else { ?>
 	It is your responsibility to make sure ALL HTML tags are closed!<br />
@@ -29,7 +29,7 @@ if (isset($SelectedArticle) && isset($Papers) && isset($AddedToNews)) { ?>
 	<br />
 	<a href="<?php echo $SelectedArticle['deleteHREF']; ?>"><b>Delete This article</b></a>
 	<br /><br /><?php
-	if (count($Papers) === 0) { ?>
+	if ($Papers === []) { ?>
 		You have no papers made that you can add an article to.
 		<a href="<?php echo $MakePaperHREF; ?>"><b>Click Here</b></a> to make a new one.<br /><?php
 	} else {

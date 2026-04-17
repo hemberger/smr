@@ -21,7 +21,7 @@ $this->includeTemplate('includes/CommonNews.inc.php'); ?>
 </form>
 
 <?php
-if (count($NewsItems) > 0) { ?>
+if ($NewsItems !== []) { ?>
 	<br />
 	<div class="center">
 		Showing <span class="yellow"><?php echo count($NewsItems); ?></span> news items.<br />

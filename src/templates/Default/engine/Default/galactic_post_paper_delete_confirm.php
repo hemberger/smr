@@ -8,7 +8,7 @@
 
 ?>
 Are you sure you want to delete the paper titled <b><?php echo $PaperTitle; ?></b>?<?php
-if (count($Articles) > 0) { ?>
+if ($Articles !== []) { ?>
 	This paper contains the following articles:
 	<ul><?php
 		foreach ($Articles as $Article) { ?>
@@ -19,7 +19,7 @@ if (count($Articles) > 0) { ?>
 	This paper contains no articles.<br /><br /><?php
 } ?>
 <form method="POST" action="<?php echo $SubmitHREF; ?>"><?php
-	if (count($Articles) > 0) { ?>
+	if ($Articles !== []) { ?>
 		Do you want to also delete the articles in this paper?<br />
 		<input type="radio" name="delete_articles" value="Yes" />Yes<br />
 		<input type="radio" name="delete_articles" value="No" />No<br /><br /><?php

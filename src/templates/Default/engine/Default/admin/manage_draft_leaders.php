@@ -4,7 +4,7 @@
  * @var array<array{game_name: string, game_id: int}> $ActiveGames
  */
 
-if (count($ActiveGames) === 0) {
+if ($ActiveGames === []) {
 	echo '<p>There are no active Draft games at this time!</p>';
 } else { ?>
 
@@ -47,7 +47,7 @@ if (count($ActiveGames) === 0) {
 		echo "<p>$ProcessingMsg</p>";
 	}
 
-	if (!isset($CurrentLeaders) || count($CurrentLeaders) === 0) {
+	if (!isset($CurrentLeaders) || $CurrentLeaders === []) {
 		echo '<p>No current Draft Leaders for this game!</p>';
 	} else { ?>
 		<br />

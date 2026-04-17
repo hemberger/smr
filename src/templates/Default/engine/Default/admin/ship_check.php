@@ -4,7 +4,7 @@
  * @var array<array{player: string, game_id: int, hardware: string, amount: int, max_amount: int, fixHREF: string}> $ExcessHardware
  */
 
-if (count($ExcessHardware) === 0) { ?>
+if ($ExcessHardware === []) { ?>
 	<p>No overpowered ships!</p><?php
 } else { ?>
 	<table class="standard">

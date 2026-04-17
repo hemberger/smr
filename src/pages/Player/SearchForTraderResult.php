@@ -102,7 +102,7 @@ class SearchForTraderResult extends PlayerPage {
 			return $result;
 		};
 
-		if (!isset($resultPlayer) && count($similarPlayers) === 0) {
+		if (!isset($resultPlayer) && $similarPlayers === []) {
 			$container = new SearchForTrader(emptyResult: true);
 			$container->go();
 		}
@@ -112,7 +112,7 @@ class SearchForTraderResult extends PlayerPage {
 			$template->assign('ResultPlayerLinks', $resultPlayerLinks);
 		}
 
-		if (count($similarPlayers) > 0) {
+		if ($similarPlayers !== []) {
 			$similarPlayersLinks = [];
 			foreach ($similarPlayers as $similarPlayer) {
 				$similarPlayersLinks[] = $playerLinks($similarPlayer);

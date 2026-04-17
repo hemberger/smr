@@ -1248,7 +1248,7 @@ class Account {
 	public function hasPermission(?int $permissionID = null): bool {
 		$permissions = $this->getPermissions();
 		if ($permissionID === null) {
-			return count($permissions) > 0;
+			return $permissions !== [];
 		}
 		return $permissions[$permissionID] ?? false;
 	}

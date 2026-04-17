@@ -95,7 +95,7 @@ class GamePlay extends AccountPage {
 		// ** Join Games
 		// ***************************************
 
-		if (count($game_id_list) > 0) {
+		if ($game_id_list !== []) {
 			$dbResult = $db->read('SELECT game_id
 						FROM game
 						WHERE game_id NOT IN (:game_ids)

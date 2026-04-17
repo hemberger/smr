@@ -45,7 +45,7 @@ class AttackPortProcessor extends PlayerPageProcessor {
 		}
 
 		$attackers = $sector->getFightingTradersAgainstPort($player, $port);
-		if (count($attackers) === 0) {
+		if ($attackers === []) {
 			create_error('No players in sector are able to attack this port!');
 		}
 

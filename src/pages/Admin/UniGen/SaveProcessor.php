@@ -213,7 +213,7 @@ class SaveProcessor extends AccountPageProcessor {
 	 * @param callable(Sector): bool $condition True if sector is valid
 	 */
 	public static function findValidSector(array $sectors, callable $condition): Sector {
-		if (count($sectors) === 0) {
+		if ($sectors === []) {
 			throw new UserError('There are no eligible sectors for this action!');
 		}
 		$key = array_rand($sectors);

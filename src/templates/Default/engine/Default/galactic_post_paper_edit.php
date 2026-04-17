@@ -8,7 +8,7 @@
 ?>
 <span class="bold"><?php echo $PaperTitle; ?></span>
 <br /><br /><?php
-if (count($Articles) === 0) { ?>
+if ($Articles === []) { ?>
 	This paper has no articles yet!<?php
 } else { ?>
 	<ul><?php

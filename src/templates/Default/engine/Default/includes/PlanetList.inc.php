@@ -9,7 +9,7 @@ use Smr\TradeGood;
  * @var Smr\Template $this
  */
 
-if (count($Planets) > 0) { ?>
+if ($Planets !== []) { ?>
 	<table id="planet-list" class="standard inset left centered">
 		<thead>
 			<tr>

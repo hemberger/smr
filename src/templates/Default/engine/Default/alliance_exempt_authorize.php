@@ -8,7 +8,7 @@
 ?>
 <h2>Exemption Requests</h2>
 <br /><?php
-if (count($Transactions) > 0) { ?>
+if ($Transactions !== []) { ?>
 	Alliance members have requested exemptions for the following transactions.<br /><br />
 	<form method="POST" action="<?php echo $ExemptHREF; ?>">
 		<table class="standard">

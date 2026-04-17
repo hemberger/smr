@@ -43,7 +43,7 @@ class VoteLink {
 				$waitTimes[] = $link->getTimeUntilFreeTurns();
 			}
 		}
-		if (count($waitTimes) === 0) {
+		if ($waitTimes === []) {
 			throw new Exception('No enabled vote sites give free turns!');
 		}
 		return min($waitTimes);

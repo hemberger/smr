@@ -47,7 +47,7 @@ if ($CanPick) { ?>
 	<p>You may not pick until another team picks!<p><?php
 }
 
-if (count($PickPlayers) > 0) { ?>
+if ($PickPlayers !== []) { ?>
 	<table id="draft-pick" class="standard">
 		<thead>
 			<tr>
@@ -90,7 +90,7 @@ if (count($PickPlayers) > 0) { ?>
 <br /><br />
 <h2>Draft History</h2>
 <?php
-if (count($History) > 0) { ?>
+if ($History !== []) { ?>
 	<table class="standard">
 		<tr>
 			<th>Pick</th>

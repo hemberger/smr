@@ -60,7 +60,7 @@
 <table class="center">
 	<tr>
 		<td width="45%" class="top"><?php
-			if (count($Kills) > 0) { ?>
+			if ($Kills !== []) { ?>
 				<p>Kills for <?php echo $DetailsName; ?></p>
 				<table class="standard center">
 					<tr>
@@ -81,7 +81,7 @@
 
 		<td width="10%">&nbsp;</td>
 		<td width="45%" class="top"><?php
-			if (count($Deaths) > 0) { ?>
+			if ($Deaths !== []) { ?>
 				<p>Deaths for <?php echo $DetailsName; ?></p>
 				<table class="standard center">
 					<tr>

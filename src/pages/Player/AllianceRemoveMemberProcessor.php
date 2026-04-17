@@ -14,7 +14,7 @@ class AllianceRemoveMemberProcessor extends PlayerPageProcessor {
 	public function build(AbstractPlayer $player): never {
 		$accountIDs = Request::getIntArray('account_id', []);
 
-		if (count($accountIDs) === 0) {
+		if ($accountIDs === []) {
 			create_error('You have to choose someone to remove them!');
 		}
 

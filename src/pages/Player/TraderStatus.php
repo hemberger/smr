@@ -56,7 +56,7 @@ class TraderStatus extends PlayerPage {
 				$hardware[] = HardwareType::get($hardwareTypeID)->name;
 			}
 		}
-		if (count($hardware) === 0) {
+		if ($hardware === []) {
 			$hardware[] = 'none';
 		}
 		$template->assign('Hardware', $hardware);

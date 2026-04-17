@@ -49,7 +49,7 @@ class AttackPlanetProcessor extends PlayerPageProcessor {
 		}
 
 		$attackers = $player->getSector()->getFightingTradersAgainstPlanet($player, $planet);
-		if (count($attackers) === 0) {
+		if ($attackers === []) {
 			create_error('No players in sector are able to attack this planet!');
 		}
 

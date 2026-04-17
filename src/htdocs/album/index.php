@@ -32,7 +32,7 @@ try {
 		$matches = Album::getByHofName($inputNick);
 	}
 
-	if (count($matches) === 0) {
+	if ($matches === []) {
 		$template->assign('Body', 'album/main.php');
 
 		// Sort entries by descending page views, then take top 5

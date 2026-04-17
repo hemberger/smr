@@ -4,7 +4,7 @@
  * @var array<int, string> $Approved
  */
 
-if (count($Approved) === 0) { ?>
+if ($Approved === []) { ?>
 	<p>There are no entries that can be moderated at this time.</p><?php
 } else { ?>
 	<p>Select the entry you wish to edit:</p>

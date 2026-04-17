@@ -21,7 +21,7 @@ function getPlayerOptionClass(AbstractPlayer $player, AbstractPlayer $other): st
 
 ?>
 <div id="players_cs" class="ajax"><?php
-	if (count($VisiblePlayers) > 0) { ?>
+	if ($VisiblePlayers !== []) { ?>
 		<table class="standard fullwidth csShips">
 			<tr>
 				<th class="header" colspan="5"><?php echo $SectorPlayersLabel; ?> (<?php echo count($VisiblePlayers) ?>)</th>
@@ -91,7 +91,7 @@ function getPlayerOptionClass(AbstractPlayer $player, AbstractPlayer $other): st
 			} ?>
 		</table><?php
 	}
-	if (isset($CloakedPlayers) && count($CloakedPlayers) > 0) {
+	if (isset($CloakedPlayers) && $CloakedPlayers !== []) {
 		?><p><span class="red bold">WARNING:</span> Sensors have detected the presence of cloaked vessels in this sector</p><?php
 	} ?>
 </div><br />

@@ -26,7 +26,7 @@ function get_seed_message(AbstractPlayer $player): string {
 		$missingSeeds[] = $dbRecord->getInt('sector_id');
 	}
 
-	if (count($missingSeeds) === 0) {
+	if ($missingSeeds === []) {
 		return $player->getPlayerName() . ' has seeded all sectors.';
 	}
 	return $player->getPlayerName() . ' (' . count($missingSeeds) . ' missing) : ' . implode(' ', $missingSeeds);

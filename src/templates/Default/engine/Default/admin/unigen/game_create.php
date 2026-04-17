@@ -35,7 +35,7 @@ if ($CanEditEnabledGames) { ?>
 
 <h1>In Development</h1>
 <?php
-if (count($DevGames) === 0) { ?>
+if ($DevGames === []) { ?>
 	There are no games in development.<br /><?php
 } else { ?>
 	<table id="dev-games" class="standard">

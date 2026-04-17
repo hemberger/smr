@@ -133,7 +133,7 @@ class Plotter {
 			}
 			$distanceQ[] = [];
 			$q = array_shift($distanceQ);
-			if (count($q) === 0) {
+			if ($q === []) {
 				$maybeWarps++;
 				continue;
 			}

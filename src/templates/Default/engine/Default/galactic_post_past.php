@@ -21,7 +21,7 @@ Select Game:&nbsp;
 </form><br />
 
 <?php
-if (count($PastEditions) === 0) { ?>
+if ($PastEditions === []) { ?>
 	<p>There are no Galactic Post editions for this game!</p><?php
 } else { ?>
 	<p>Choose a Galactic Post edition to view:</p>

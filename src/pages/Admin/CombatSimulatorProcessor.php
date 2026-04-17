@@ -91,7 +91,7 @@ class CombatSimulatorProcessor extends AccountPageProcessor {
 						unset($defendersLeft[$key]);
 					}
 				}
-				if (count($attackersLeft) === 0 || count($defendersLeft) === 0) {
+				if ($attackersLeft === [] || $defendersLeft === []) {
 					break;
 				}
 				$results = runAnAttack($attackersLeft, $defendersLeft);

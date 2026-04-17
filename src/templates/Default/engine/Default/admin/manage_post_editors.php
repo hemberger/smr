@@ -5,7 +5,7 @@
  * @var ?array<string> $CurrentEditors
  */
 
-if (count($ActiveGames) === 0) {
+if ($ActiveGames === []) {
 	echo '<p>There are no active games at this time!</p>';
 } else { ?>
 
@@ -39,7 +39,7 @@ if (count($ActiveGames) === 0) {
 	<br /><br />
 
 	<?php
-	if (!isset($CurrentEditors) || count($CurrentEditors) === 0) {
+	if (!isset($CurrentEditors) || $CurrentEditors === []) {
 		echo 'No current editors for this game!';
 	} else { ?>
 		Current Editors:

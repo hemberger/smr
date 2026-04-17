@@ -6,7 +6,7 @@
 	Don't keep unnecessary data!
 </p><?php
 
-if (count($LoggedAccounts) > 0) { ?>
+if ($LoggedAccounts !== []) { ?>
 	<form method="POST" action="<?php echo $LogConsoleFormHREF; ?>">
 		<table class="standard">
 			<tr>

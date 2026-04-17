@@ -26,7 +26,7 @@ echo $Message; ?>
 </form>
 
 <?php
-if (count($OwnedAnon) > 0) { ?>
+if ($OwnedAnon !== []) { ?>
 	<br /><h2>Your accounts</h2><br />
 	<table class="standard inset center">
 		<tr>

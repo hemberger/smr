@@ -44,7 +44,7 @@ use Smr\Race;
 
 	<h3>Council Members</h3><br /><?php
 	$CouncilMembers = Council::getRaceCouncil($ThisPlayer->getGameID(), $RaceID);
-	if (count($CouncilMembers) > 0) { ?>
+	if ($CouncilMembers !== []) { ?>
 		<table id="council-members" class="center standard" width="85%">
 			<thead>
 				<tr>

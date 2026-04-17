@@ -12,7 +12,7 @@ use Smr\Globals;
 a game of chess played over the super-photonic transponder aboard your ship.</p>
 
 <?php
-if (count($ChessGames) > 0) { ?>
+if ($ChessGames !== []) { ?>
 	<table class="standard ajax" id="GameList">
 		<tr>
 			<th>Players</th>
@@ -39,7 +39,7 @@ if (count($ChessGames) > 0) { ?>
 	<br /><br /><?php
 }
 
-if (count($PlayerList) > 0) { ?>
+if ($PlayerList !== []) { ?>
 	<form action="<?php echo Globals::getChessCreateHREF(); ?>" method="POST">
 		<label for="player_id">Challenge: </label>
 		<select id="player_id" name="player_id"><?php
@@ -53,7 +53,7 @@ if (count($PlayerList) > 0) { ?>
 }
 
 if (isset($NPCList)) {
-	if (count($NPCList) > 0) { ?>
+	if ($NPCList !== []) { ?>
 		<form action="<?php echo Globals::getChessCreateHREF(); ?>" method="POST">
 			<label for="player_id">Challenge NPC: </label>
 			<select id="player_id" name="player_id"><?php

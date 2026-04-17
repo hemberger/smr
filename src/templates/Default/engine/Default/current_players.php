@@ -21,7 +21,7 @@ use Smr\Globals;
 	<br /><br />
 
 	<?php
-	if (count($AllRows) > 0) { ?>
+	if ($AllRows !== []) { ?>
 		<table id="cpl" class="center standard inset">
 			<thead>
 				<tr>

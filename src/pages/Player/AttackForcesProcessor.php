@@ -60,7 +60,7 @@ class AttackForcesProcessor extends PlayerPageProcessor {
 		}
 
 		$attackers = $player->getSector()->getFightingTradersAgainstForces($player, $bump);
-		if (count($attackers) === 0) {
+		if ($attackers === []) {
 			create_error('No players in sector are able to attack these forces!');
 		}
 

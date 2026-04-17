@@ -11,7 +11,7 @@
  * @var ?string $BuyHREF
  */
 
-if (count($ShipsSold) > 0) { ?>
+if ($ShipsSold !== []) { ?>
 	<h2>Available Ships</h2>
 	<table class="standard">
 		<tr>
@@ -31,7 +31,7 @@ if (count($ShipsSold) > 0) { ?>
 			</tr><?php
 		}
 	?></table><?php
-	if (count($ShipsUnavailable) > 0) { ?>
+	if ($ShipsUnavailable !== []) { ?>
 		<br />
 		<h2>Under Construction</h2>
 		<table class="standard">

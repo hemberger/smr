@@ -17,7 +17,7 @@ if (isset($Links)) { ?>
 	<div class="center"><a href="<?php echo $BackHREF; ?>">&lt;&lt;Back</a></div>
 
 	<?php
-	if (isset($Rankings) && count($Rankings) > 0) { ?>
+	if (isset($Rankings) && $Rankings !== []) { ?>
 		<table class="shrink center standard">
 			<tr>
 				<th>Rank</th>

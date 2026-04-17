@@ -247,7 +247,7 @@ function flip_coin(float $percentSuccess = 50): bool {
  * @return T
  */
 function array_rand_value(array $arr): mixed {
-	if (count($arr) === 0) {
+	if ($arr === []) {
 		throw new Exception('Cannot pick random value from empty array!');
 	}
 	return $arr[array_rand($arr)];

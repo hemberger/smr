@@ -15,7 +15,7 @@ Welcome <?php echo $ThisPlayer->getDisplayName(); ?>, your position is <i>Editor
 	<li><a href="<?php echo $MakePaperHREF; ?>">Make a paper</a></li>
 </ul>
 <br /><?php
-if (count($Papers) > 0) { ?>
+if ($Papers !== []) { ?>
 	The following papers are already made (papers must have 3-8 articles to go to the press):
 	<br /><br /><?php
 }

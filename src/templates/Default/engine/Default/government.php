@@ -9,7 +9,7 @@
 
 ?>
 <div class="center"><?php
-	if (count($WarRaces) > 0) { ?>
+	if ($WarRaces !== []) { ?>
 		We are at WAR with<br /><br /><?php
 		foreach ($WarRaces as $RaceName) { ?>
 			<span class="red">The <?php echo $RaceName; ?><br /></span><?php
@@ -18,11 +18,11 @@
 		<p>&nbsp;</p><?php
 	}
 
-	if (count($AllBounties) > 0) { ?>
+	if ($AllBounties !== []) { ?>
 		<div class="center">Most wanted by the Federal Government</div><br /><?php
 		$this->includeTemplate('includes/BountyList.inc.php', ['Bounties' => $AllBounties]);
 	}
-	if (count($MyBounties) > 0) { ?>
+	if ($MyBounties !== []) { ?>
 		<div class="center">Claimable Bounties</div><br /><?php
 		$this->includeTemplate('includes/BountyList.inc.php', ['Bounties' => $MyBounties]);
 	}

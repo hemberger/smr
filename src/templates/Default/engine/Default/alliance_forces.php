@@ -8,7 +8,7 @@
  * @var array{Mines: int, CDs: int, SDs: int} $TotalCost
  */
 
-if (count($Forces) === 0) { ?>
+if ($Forces === []) { ?>
 	Your alliance has no deployed forces.
 	<a href="<?php echo WIKI_URL; ?>/game-guide/forces" target="_blank">
 		<img src="images/silk/help.png" width="16" height="16" alt="Wiki Link" title="Goto SMR Wiki: Forces"/>

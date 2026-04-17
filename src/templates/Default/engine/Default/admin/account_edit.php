@@ -60,7 +60,7 @@ use Smr\Epoch;
 		<tr>
 			<td valign="top" class="right bold">Player:</td>
 				<td><?php
-					if (count($EditingPlayers) > 0) { ?>
+					if ($EditingPlayers !== []) { ?>
 						<a onclick="$('#accountPlayers').fadeToggle(600);">Show/Hide</a>
 						<table id="accountPlayers" style="display:none"><?php
 							foreach ($EditingPlayers as $CurrentPlayer) {
@@ -214,7 +214,7 @@ use Smr\Epoch;
 		<tr>
 			<td valign="top" class="right bold">Closing History:</td>
 			<td><?php
-				if (count($ClosingHistory) > 0) {
+				if ($ClosingHistory !== []) {
 					foreach ($ClosingHistory as $Action) {
 						echo date($ThisAccount->getDateTimeFormat(), $Action['Time']); ?> - <?php echo $Action['Action']; ?> by <?php echo $Action['AdminName']; ?><br /><?php
 					}
@@ -276,7 +276,7 @@ use Smr\Epoch;
 		<tr>
 			<td valign="top" class="right bold">Last IP's:</td>
 			<td><?php
-				if (count($RecentIPs) > 0) { ?>
+				if ($RecentIPs !== []) { ?>
 					<a onclick="$('#recentIPs').fadeToggle(600);">Show/Hide</a>
 					<table id="recentIPs" style="display:none"><?php
 						foreach ($RecentIPs as $RecentIP) { ?>

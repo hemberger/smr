@@ -44,7 +44,7 @@ function shared_channel_msg_op_list(AbstractPlayer $player): array {
 
 	$results = [];
 	foreach ($responses as $response => $responders) {
-		if (count($responders) > 0) {
+		if ($responders !== []) {
 			$results[] = $response . ' (' . count($responders) . '):';
 			foreach ($responders as $responder) {
 				$results[] = ' * ' . $responder->getPlayerName();
@@ -52,7 +52,7 @@ function shared_channel_msg_op_list(AbstractPlayer $player): array {
 		}
 	}
 
-	if (count($results) === 0) {
+	if ($results === []) {
 		return ['No one has responded to the upcoming op.'];
 	}
 

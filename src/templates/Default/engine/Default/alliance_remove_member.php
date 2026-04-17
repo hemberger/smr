@@ -7,7 +7,7 @@
 
 ?>
 <div class="center"><?php
-	if (count($Members) === 0) { ?>
+	if ($Members === []) { ?>
 		There is no-one to kick! You are all by yourself!<?php
 	} else { ?>
 		<form method="POST" action="<?php echo $BanishHREF; ?>">

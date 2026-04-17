@@ -10,7 +10,7 @@
 <h2>Filtered Words</h2><br />
 
 <?php
-if (count($FilteredWords) === 0) { ?>
+if ($FilteredWords === []) { ?>
 	No words are currently being filtered.<br /><br /><?php
 } else { ?>
 	<form method="POST" action="<?php echo $DelHREF; ?>">

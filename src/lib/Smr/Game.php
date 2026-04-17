@@ -474,7 +474,7 @@ class Game {
 
 	public function getLastSectorID(): int {
 		$galaxies = $this->getGalaxies();
-		if (count($galaxies) === 0) {
+		if ($galaxies === []) {
 			throw new Exception('There are no galaxies in this game yet!');
 		}
 		return end($galaxies)->getEndSector();

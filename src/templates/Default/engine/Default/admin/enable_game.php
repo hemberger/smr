@@ -10,7 +10,7 @@ if (isset($ProcessingMsg)) {
 	echo $ProcessingMsg;
 }
 
-if (count($DisabledGames) === 0) { ?>
+if ($DisabledGames === []) { ?>
 	<p>All games are already enabled!</p><?php
 } else { ?>
 

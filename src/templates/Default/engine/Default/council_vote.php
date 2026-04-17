@@ -21,7 +21,7 @@ use Smr\Race;
 </div><br />
 
 <?php
-if (count($VoteTreaties) === 0) { ?>
+if ($VoteTreaties === []) { ?>
 	<div class="center"><i>There are no treaties to vote on at this time.</i></div>
 <?php
 } else { ?>

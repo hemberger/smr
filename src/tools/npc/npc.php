@@ -343,7 +343,7 @@ function changeNPCLogin(): void {
 		}
 	}
 
-	if (count($availableNpcs) === 0) {
+	if ($availableNpcs === []) {
 		debug('No free NPCs');
 		exitNPC();
 	}
@@ -538,7 +538,7 @@ function setupShip(AbstractPlayer $player): void {
 		WEAPON_TYPE_LASER,
 	];
 	$ship->removeAllWeapons();
-	while ($ship->hasOpenWeaponSlots() && count($weaponIDs) > 0) {
+	while ($ship->hasOpenWeaponSlots() && $weaponIDs !== []) {
 		$weapon = Weapon::getWeapon(array_shift($weaponIDs));
 		$ship->addWeapon($weapon);
 	}
@@ -589,7 +589,7 @@ function findRoutes(AbstractPlayer $player): array {
 		$galaxies[] = $galaxy;
 	}
 	// Fallback to current galaxy in case this has selected no galaxies
-	if (count($galaxies) === 0) {
+	if ($galaxies === []) {
 		$galaxies[] = $player->getSector()->getGalaxy();
 	}
 
@@ -639,7 +639,7 @@ function findRoutes(AbstractPlayer $player): array {
 	Port::clearCache();
 	Sector::clearCache();
 
-	if (count($routesMerged) === 0) {
+	if ($routesMerged === []) {
 		debug('Could not find any routes! Try another NPC.');
 		throw new FinalAction();
 	}

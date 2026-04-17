@@ -726,7 +726,7 @@ function doSkeletonAssigns(Template $template): void {
  * @param array<string> $items
  */
 function format_list(array $items): string {
-	if (count($items) === 0) {
+	if ($items === []) {
 		$result = '';
 	} elseif (count($items) === 1) {
 		$result = $items[0];

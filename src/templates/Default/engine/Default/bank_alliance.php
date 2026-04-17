@@ -20,7 +20,7 @@ use Smr\Globals;
  * @var string $BankTransactionFormHREF
  */
 
-if (count($AlliedAllianceBanks) > 0) { ?>
+if ($AlliedAllianceBanks !== []) { ?>
 	<ul><?php
 	foreach ($AlliedAllianceBanks as $AlliedAlliance) { ?>
 		<li>
@@ -42,7 +42,7 @@ if (isset($UnlimitedWithdrawal) && $UnlimitedWithdrawal === true) {
 <br /><br /><?php
 
 // only if we have at least one result
-if (count($BankTransactions) > 0) { ?>
+if ($BankTransactions !== []) { ?>
 	<div class="center">
 		<form class="standard" method="POST" action="<?php echo $FilterTransactionsFormHREF; ?>">
 			<table cellspacing="5" cellpadding="0" class="nobord center">

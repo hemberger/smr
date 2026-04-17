@@ -76,7 +76,7 @@ class ArticleView extends PlayerPage {
 			}
 			$template->assign('Papers', $papers);
 
-			if (count($papers) === 0) {
+			if ($papers === []) {
 				$container = new PaperMake();
 				$template->assign('MakePaperHREF', $container->href());
 			}

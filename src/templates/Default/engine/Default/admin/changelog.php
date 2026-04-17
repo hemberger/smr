@@ -4,7 +4,7 @@
  * @var array<array{version: string, went_live: string, changes: array<array{title: string, message: string}>}> $Versions
  */
 
-if (count($Versions) === 0) { ?>
+if ($Versions === []) { ?>
 	Must add an initial version in the database first!<?php
 	return;
 }

@@ -13,7 +13,7 @@ if (isset($Message)) {
 <h2>Blacklisted Players</h2>
 
 <?php
-if (count($Blacklist) > 0) { ?>
+if ($Blacklist !== []) { ?>
 	<br />
 	<form method="POST" action="<?php echo $BlacklistDeleteHREF; ?>">
 		<table class="standard" width="50%">

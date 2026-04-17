@@ -12,7 +12,7 @@ class LogConsoleProcessor extends AccountPageProcessor {
 	public function build(Account $account): never {
 		$accountIDs = Request::getIntArray('account_ids');
 		// nothing marked?
-		if (count($accountIDs) === 0) {
+		if ($accountIDs === []) {
 			create_error('You have to select the log files you want to view/delete!');
 		}
 

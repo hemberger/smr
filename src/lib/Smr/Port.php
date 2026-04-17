@@ -1153,7 +1153,7 @@ class Port {
 	 * @param array<int> $accountIDs
 	 */
 	public function addCachePorts(array $accountIDs): bool {
-		if (count($accountIDs) > 0 && $this->exists()) {
+		if ($accountIDs !== [] && $this->exists()) {
 			$db = Database::getInstance();
 			$cache = $db->escapeObject($this, true);
 			$cacheHash = $db->escapeString(md5($cache));

@@ -6,7 +6,7 @@
  * @var array<int, array{DeleteHref?: string, Replies: int, Sender: string, SendTime: int, ThreadID: int, Topic: string, Unread: bool, ViewHref: string}> $Threads
  */
 
-if (count($Threads) > 0) { ?>
+if ($Threads !== []) { ?>
 	<table id="topic-list" class="centered standard inset">
 		<thead>
 			<tr>

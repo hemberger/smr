@@ -10,7 +10,7 @@ use Smr\PlanetMenuOption;
  * @var Smr\Template $this
  */
 
-if (count($Planets) > 0) { ?>
+if ($Planets !== []) { ?>
 	<table id="planet-list" class="standard inset center">
 		<thead>
 			<tr>

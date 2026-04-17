@@ -13,7 +13,7 @@
 <br /><br />
 
 <h2>Unreachable Sectors</h2><?php
-if (count($UnreachableSectors) === 0) { ?>
+if ($UnreachableSectors === []) { ?>
 	None!<br /><?php
 } else {
 	foreach ($UnreachableSectors as $sector) {

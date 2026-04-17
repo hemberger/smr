@@ -603,7 +603,7 @@ class Planet {
 	public function hasStockpile(?int $goodID = null): bool {
 		if ($goodID === null) {
 			$stockpile = $this->getStockpile();
-			return count($stockpile) > 0 && max($stockpile) > 0;
+			return $stockpile !== [] && max($stockpile) > 0;
 		}
 		return $this->getStockpile($goodID) > 0;
 	}

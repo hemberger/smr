@@ -58,7 +58,7 @@ is in your alliance.</p>
 
 <h2>Players sharing with you:</h2>
 <br /><?php
-if (count($ShareFrom) > 0) { ?>
+if ($ShareFrom !== []) { ?>
 	<table class="standard">
 		<tr class="center">
 			<th>Player ID</th>

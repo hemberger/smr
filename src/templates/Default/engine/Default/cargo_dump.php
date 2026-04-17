@@ -9,7 +9,7 @@ Enter the amount of cargo you wish to jettison.<br />
 Please keep in mind that you will lose experience and one turn!<br /><br />
 
 <?php
-if (count($Goods) === 0) { ?>
+if ($Goods === []) { ?>
 	You have no cargo to dump!<?php
 } else { ?>
 	<table class="standard">

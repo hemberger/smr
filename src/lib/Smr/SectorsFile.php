@@ -44,7 +44,7 @@ class SectorsFile {
 			foreach ($ship->getAllMaxHardware() as $hardwareID => $maxHardware) {
 				$shipEquip[] = HardwareType::get($hardwareID)->name . '=' . $maxHardware;
 			}
-			if (count($shipEquip) > 0) {
+			if ($shipEquip !== []) {
 				$file .= ',ShipEquipment=' . implode(';', $shipEquip);
 			}
 			$file .= ',Restrictions=' . $ship->getRestriction()->value;

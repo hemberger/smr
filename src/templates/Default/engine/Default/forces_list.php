@@ -6,7 +6,7 @@
  * @var array<Smr\Force> $Forces
  */
 
-if (count($Forces) === 0) { ?>
+if ($Forces === []) { ?>
 	You have no deployed forces.
 	<a href="<?php echo WIKI_URL; ?>/game-guide/forces" target="_blank">
 		<img src="images/silk/help.png" width="16" height="16" alt="Wiki Link" title="Goto SMR Wiki: Forces"/>

@@ -43,7 +43,7 @@ function shared_channel_msg_op_turns(AbstractPlayer $player): array {
 		$oppers[$attendeePlayer->getPlayerName()] = $turns;
 	}
 
-	if (count($oppers) === 0) {
+	if ($oppers === []) {
 		return ['There are no op participants.'];
 	}
 

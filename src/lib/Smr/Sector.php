@@ -653,7 +653,7 @@ class Sector {
 
 	public function hasLocation(?int $locationTypeID = null): bool {
 		$locations = $this->getLocations();
-		if (count($locations) === 0) {
+		if ($locations === []) {
 			return false;
 		}
 		if ($locationTypeID === null) {
@@ -944,7 +944,7 @@ class Sector {
 	public function getFightingTradersAgainstPlanet(AbstractPlayer $attackingPlayer, Planet $defendingPlanet, bool $allEligible = false): array {
 		$fightingPlayers = [];
 		$alliancePlayers = Player::getSectorPlayersByAlliances($this->getGameID(), $this->getSectorID(), [$attackingPlayer->getAllianceID()]);
-		if (count($alliancePlayers) > 0) {
+		if ($alliancePlayers !== []) {
 			$planetOwner = $defendingPlanet->getOwner();
 			foreach ($alliancePlayers as $accountID => $player) {
 				if ($player->canFight()) {

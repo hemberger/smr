@@ -24,7 +24,7 @@ class BountyClaimProcessor extends PlayerPageProcessor {
 		};
 		$bounties = $player->getClaimableBounties($bountyType);
 
-		if (count($bounties) > 0) {
+		if ($bounties !== []) {
 			$claimText = ('You have claimed the following bounties<br /><br />');
 
 			foreach ($bounties as $bounty) {

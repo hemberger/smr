@@ -417,7 +417,7 @@ class Location {
 	public function isHardwareSold(?int $hardwareTypeID = null): bool {
 		$hardware = $this->getHardwareSold();
 		if ($hardwareTypeID === null) {
-			return count($hardware) !== 0;
+			return $hardware !== [];
 		}
 		return isset($hardware[$hardwareTypeID]);
 	}
@@ -481,7 +481,7 @@ class Location {
 	public function isShipSold(?int $shipTypeID = null): bool {
 		$ships = $this->getShipsSold();
 		if ($shipTypeID === null) {
-			return count($ships) !== 0;
+			return $ships !== [];
 		}
 		return isset($ships[$shipTypeID]);
 	}
@@ -530,7 +530,7 @@ class Location {
 	public function isWeaponSold(?int $weaponTypeID = null): bool {
 		$weapons = $this->getWeaponsSold();
 		if ($weaponTypeID === null) {
-			return count($weapons) !== 0;
+			return $weapons !== [];
 		}
 		return isset($weapons[$weaponTypeID]);
 	}

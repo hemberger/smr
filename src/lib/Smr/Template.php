@@ -287,7 +287,7 @@ class Template {
 				if ($matchNodes === false) {
 					throw new Exception('XPath query failed for selector: ' . $selector);
 				}
-				if (count($matchNodes) > 0) {
+				if ($matchNodes !== []) {
 					$doAjaxMiddle = false;
 					break;
 				}

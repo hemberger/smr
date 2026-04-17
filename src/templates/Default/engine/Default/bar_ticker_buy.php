@@ -5,7 +5,7 @@
  * @var array<string, int> $Tickers
  */
 
-if (count($Tickers) > 0) { // to prevent docblock from applying to for-loop
+if ($Tickers !== []) { // to prevent docblock from applying to for-loop
 	foreach ($Tickers as $Type => $TimeLeft) { ?>
 		You own a <?php echo $Type; ?> for another <?php echo format_time($TimeLeft); ?>.
 		<br /><?php

@@ -4,7 +4,7 @@
  * @var array<array{Name: string, ImageHTML: string, ShipAmount: int, PlanetAmount: int, DefaultAmount: int, HREF: string}> $GoodInfo
  */
 
-if (count($GoodInfo) === 0) { ?>
+if ($GoodInfo === []) { ?>
 	<p>There are no goods present on your ship or the planet!</p><?php
 	return;
 } ?>

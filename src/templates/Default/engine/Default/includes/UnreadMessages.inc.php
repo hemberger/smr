@@ -10,7 +10,7 @@
 		<a href="<?php echo $UnreadMessage['href']; ?>"><img src="<?php echo $UnreadMessage['img']; ?>" width="32" height="32" alt="<?php echo $UnreadMessage['alt']; ?>" /></a>
 		<span class="small"><?php echo $UnreadMessage['num']; ?></span><?php
 	}
-	if (count($UnreadMessages) > 0) { ?>
+	if ($UnreadMessages !== []) { ?>
 		<br /><?php
 	} ?>
 </span>

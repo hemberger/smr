@@ -19,7 +19,7 @@ class CombatLogListProcessor extends PlayerPageProcessor {
 		// If here, we have hit either the 'Save', 'Delete', or 'View' form buttons.
 		// Immediately return to the log list if we haven't selected any logs.
 		$logIDs = array_keys(Request::getArray('id', []));
-		if (count($logIDs) === 0) {
+		if ($logIDs === []) {
 			$message = 'You must select at least one combat log!';
 			$container = new CombatLogList($this->action, message: $message);
 			$container->go();

@@ -14,7 +14,7 @@ if (isset($CreateAllianceHREF)) { ?>
 	<br /><br /><?php
 }
 
-if (count($Alliances) > 0) { ?>
+if ($Alliances !== []) { ?>
 	<table id="alliance-list" class="standard inset centered">
 		<thead>
 			<tr>

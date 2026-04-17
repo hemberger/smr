@@ -36,7 +36,7 @@ function get_draft_teams(int $gameId): array {
 		}
 	}
 
-	if (count($teams) === 0) {
+	if ($teams === []) {
 		throw new Exception('No draft leaders have been selected yet.');
 	}
 

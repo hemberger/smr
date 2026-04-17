@@ -4,7 +4,7 @@
  * @var array<array{notifyID: int, senderName: string, receiverName: string, gameName: string, sentDate: string, reportDate: string, text: string}> $Messages
  */
 
-if (count($Messages) === 0) { ?>
+if ($Messages === []) { ?>
 	<p>There are no reported Messages.</p><?php
 	return;
 } ?>

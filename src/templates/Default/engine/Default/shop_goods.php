@@ -38,7 +38,7 @@ if ($SearchedByFeds) { ?>
 
 <br />
 <?php
-if (count($BoughtGoods) > 0) { ?>
+if ($BoughtGoods !== []) { ?>
 	<h2>The port sells you the following:</h2>
 	<table class="standard">
 		<tr class="center">
@@ -70,7 +70,7 @@ if (count($BoughtGoods) > 0) { ?>
 	<br /><br /><?php
 }
 
-if (count($SoldGoods) > 0) { ?>
+if ($SoldGoods !== []) { ?>
 	<h2>The port would buy the following:</h2>
 	<table class="standard">
 		<tr class="center">

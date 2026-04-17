@@ -41,7 +41,7 @@ class EditGalaxy extends AccountPage {
 		$returnTo = $this->returnTo(); // copy without message
 
 		$galaxies = Galaxy::getGameGalaxies($this->gameID);
-		if (count($galaxies) === 0) {
+		if ($galaxies === []) {
 			// Game was created, but no galaxies exist, so go back to
 			// the galaxy generation page
 			$container = new CreateGalaxies($this->gameID);

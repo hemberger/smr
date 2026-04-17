@@ -15,7 +15,7 @@ class AllianceShareMapsProcessor extends PlayerPageProcessor {
 		$alliance_ids = array_diff($memberIDs, [$player->getAccountID()]);
 
 		// end here if we are alone in the alliance
-		if (count($alliance_ids) === 0) {
+		if ($alliance_ids === []) {
 			create_error('Who exactly are you sharing maps with?');
 		}
 
@@ -31,7 +31,7 @@ class AllianceShareMapsProcessor extends PlayerPageProcessor {
 			'account_ids' => $db->escapeArray($alliance_ids),
 			'game_id' => $db->escapeNumber($player->getGameID()),
 		];
-		if (count($unvisitedSectors) > 0) {
+		if ($unvisitedSectors !== []) {
 			$sqlParams['sector_ids'] = $db->escapeArray($unvisitedSectors);
 			$db->write($query . ' AND sector_id NOT IN (:sector_ids)', $sqlParams);
 		} else {

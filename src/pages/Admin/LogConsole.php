@@ -47,7 +47,7 @@ class LogConsole extends AccountPage {
 		}
 		$template->assign('LoggedAccounts', $loggedAccounts);
 
-		if (count($loggedAccounts) > 0) {
+		if ($loggedAccounts !== []) {
 			$template->assign('LogConsoleFormHREF', (new LogConsoleProcessor())->href());
 			$template->assign('AnonAccessHREF', (new LogConsoleAnonBank())->href());
 		}
